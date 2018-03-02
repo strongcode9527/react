@@ -1,0 +1,39 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "Implement a react by yourself",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strongcode9527/react.git"
+  },
+  "keywords": [
+    "react",
+    "javascript",
+    "mvvm"
+  ],
+  "author": "strong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/strongcode9527/react/issues"
+  },
+  "homepage": "https://github.com/strongcode9527/react#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.18.1",
+    "eslint-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.0.4",
+    "path": "^0.12.7",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.10",
+    "webpack-dev-server": "^3.1.0"
+  }
+}
