@@ -1,3 +1,7 @@
 {
-  "presets": ["env", "stage-2"]
+  "presets": ["env", "stage-2"],
+  "plugins": [
+    ["transform-react-jsx", {"pragma": "Strong"}],
+    "transform-class-properties"
+  ]
 }

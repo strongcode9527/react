@@ -8,21 +8,20 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ['babel-loader'],
         exclude: /node_modules/
       }
     ]
   },
-  devServer: {
-    port: 8080,
-    open: true,
-  },
-  mode: 'development',
+  // devServer: {
+  //   port: 8080,
+  //   open: true,
+  // },
+  mode: 'production',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({template: './index.html'})
