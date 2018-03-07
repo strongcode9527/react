@@ -17,11 +17,12 @@ module.exports = {
       }
     ]
   },
-  // devServer: {
-  //   port: 8080,
-  //   open: true,
-  // },
-  mode: 'production',
+  devtool: 'inline-source-map',
+  devServer: {
+    port: 8080,
+    open: true,
+  },
+  mode: 'development',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({template: './index.html'})

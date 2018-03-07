@@ -1,17 +1,8 @@
-var Strong = function(parames) {
-  return (parames)
-}
+import Strong from '../src/index.js'
 
-Strong.createElement = function(params) {
-  return {}
-}
+var a =  <div>
+  <img src="avatar.png" className="profile" />
+</div>;
 
-function a() {
-  return (
-    <div>
-      aaa
-    </div>
-  )
-}
 
-console.log(a())
+console.log(a)
