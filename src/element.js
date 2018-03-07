@@ -5,7 +5,6 @@
  * @param {*} children element的子节点。
  */
 export function createElement(type, config, children) {
-  console.log('createElement', type, config, children)
   const props = Object.assign({}, config),
         childrenLength = [].slice.call(arguments).length - 2
   // 当子节点大于一个时用数组保存
