@@ -1,3 +1,5 @@
+import {mountComponent} from './mount'
+
 function instantiateComponent(element) {
   let componentInstance
 
@@ -43,11 +45,61 @@ export class Component {
   }
 }
 
+
+
 class DomComponent {
   constructor(element) {
     this._currentElement = element
     this._domNode = null
   }
+
+  updateNodeProperties(preProps, nextProps) {
+    let styleUpdates = {}
+    // 之前的状态全部清空。
+    Object.keys(preProps).forEach((propName) => {
+      if(propName === 'style') {
+        Object.keys(preProps.style).forEach((styleName) => {
+          styleUpdates[styleName] = ''
+        })
+      }else {
+        DOM.removeProperty(this._domNode, propName)
+      }
+    })
+
+    // 更新状态。
+    Object.keys(nextProps).forEach((propName) => {
+      if(propName === 'style') {
+        Object.keys(nextProps.style).forEach((styleName) => {
+          styleUpdates[styleName] = nextProps.style[styleName]
+        })
+      }else {
+        DOM.setProperty(this._domNode, propName, nextProps[propName])
+      }
+    })
+  }
+
+  _createInitialDomChildren(props) {
+    if(
+      typeof props.children === 'string' ||
+      typeof props.children === 'string'
+    ) {
+      const textNode = document.createTextNode(props.children)
+    }
+    else if(props.children) {
+      const children = Array.isArray(props.children) ? props.children : [props.children]
+
+      children.forEach((children, i) => {
+        const childComponent = instantiateComponent(child)
+        childComponent._mountIndex = i
+
+        const childNode = mountComponent(child)
+
+        DOM.appendChildren(this._domNode, childrenNodes)
+
+      })
+    }
+
+}
 
   mountComponent() {
     const node = document.createElement(this._currentElement.type)
@@ -60,15 +112,9 @@ class DomComponent {
   }
 }
 
-// Reconciler
-function mountComponent(component) {
-  return component.mountComponent()
-}
 
-export function mount(element, node) {
-  const component = instantiateComponent(element)
-  const renderNode = component.mountComponent()
-
-  DOM.empty(node)
-  DOM.appendChildren(node, renderedNode)
+function updateSyles(node, style) {
+  Object.keys(style).forEach((styleName) => {
+    node.style[styleName] = style[styleName]
+  })
 }
