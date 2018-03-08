@@ -17,9 +17,10 @@ function instantiateComponent(element) {
       props: {children: element}
     })
   }
+  return componentInstance
 }
 
-class Component {
+export class Component {
   constructor(props) {
     this.props = props
     this.currentElement = null
@@ -35,7 +36,7 @@ class Component {
     const renderedComponent = instantiateComponent(renderedElement)
     this._renderedComponent = renderedComponent
 
-    const renderedNode = Reconciler.mountComponent(renderedComponent)
+    const renderedNode = mountComponent(renderedComponent)
     this._renderedNode = renderedNode
 
     return renderedNode
@@ -59,12 +60,12 @@ class DomComponent {
   }
 }
 
+// Reconciler
 function mountComponent(component) {
   return component.mountComponent()
 }
 
-
-function mount(element, node) {
+export function mount(element, node) {
   const component = instantiateComponent(element)
   const renderNode = component.mountComponent()
 

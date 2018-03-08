@@ -1,4 +1,4 @@
-import Strong from '../src/index.js'
+import Strong, {Component, mount} from '../src/index.js'
 
 var a =  <div>
   <img src="avatar.png" className="profile" />
@@ -6,4 +6,4 @@ var a =  <div>
 </div>;
 
 
-console.log(a)
+console.log(Strong, Component)
