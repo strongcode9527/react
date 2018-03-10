@@ -1,4 +1,5 @@
 import {mountComponent} from './mount'
+import {receiveComponent} from './reconciler'
 
 function instantiateComponent(element) {
   let componentInstance
@@ -29,9 +30,11 @@ export class Component {
     this._renderedComponent = null
     this._renderedNode = null
   }
+
   _construct(element) {
     this._currentElement = element
   }
+
   mountComponent() {
     const renderedElement = this.render()
 
@@ -43,8 +46,46 @@ export class Component {
 
     return renderedNode
   }
-}
 
+  setState(partialState) {
+    this._pendingState = Object.assign({}, this.state, partialState)
+
+    /* 为什么这里要调用 updateComponent 的两个参数都是 currentElement 呢？
+    *  我们知道 React 用一个 element 来表示一个组件的 DOM 结构。
+    *  并且在上文提到，组件的更新无非有两种，一种是组件的 props 发生变化，这会改变 Element 的数据，而 state 的改变却并不会改变 Element。
+    *  所以这里 element 在 setState 的操作中是没有变化的。
+    */
+    this.updateComponent(this._currentElement, this._currentElement)
+  }
+
+  updateComponent(preElement, nextElement) {
+    if(preElement !== nextElement) {
+      // 因为两个element不一样，所以是由于props改变导致的update。
+      // 所以在这里，要调用componentWillReceiveProps
+
+    }
+
+    this._currentElement = nextElement
+
+    this.props = nextElement.props
+    this.state = this._pendingState
+    this._pendingState = null
+
+    const preRenderedElement = this._renderedComponent._currentElement,
+          nextRenderedElement = this.render()
+
+    if(shouldUpdateComponent(preRenderedComponent, nextRenderedComponent)) {
+      Reconciler.receiveComponent(this._renderedComponent, nextElement)
+    }else {
+      // remount everything  under this node
+      Reconciler.unmountComponent(this._renderedComponent)
+
+      const nextRenderedComponent = instantiateComponent(nextRenderedComponent)
+
+      DOM.replaceNode(this._renderedComponent._domNode, this._renderedNode)
+    }
+  }
+}
 
 
 class DomComponent {
@@ -111,6 +152,29 @@ class DomComponent {
     return node
   }
 }
+
+function shouldUpdateComponent(prevElement, nextElement) {
+  return prevElement.type === nextElement.type
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function updateSyles(node, style) {
