@@ -1,9 +1,10 @@
-import Strong, {Component, mount} from '../src/index.js'
+var hello1Factory = require('./module')
+var hello2Factory = require('./module')
 
-var a =  <div>
-  <img src="avatar.png" className="profile" />
-  my name is strong
-</div>;
+var hello1 = hello1Factory()
+var hello2 = hello2Factory()
 
+hello1.setName('BYVoid');
+hello2.setName('BYVoid 2');
 
-console.log(Strong, Component)
+hello1.sayHello();

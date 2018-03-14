@@ -62,7 +62,6 @@ export class Component {
     if(preElement !== nextElement) {
       // 因为两个element不一样，所以是由于props改变导致的update。
       // 所以在这里，要调用componentWillReceiveProps
-
     }
 
     this._currentElement = nextElement
@@ -140,7 +139,12 @@ class DomComponent {
       })
     }
 
-}
+  }
+  updateComponent(preElement, nextElement) {
+    this._currentElement = nextElement
+    this._updateNodeProperties(preElement.props, nextElement.props)
+    this._updateDOMChildren(preElement.props, nextElment.props)
+  }
 
   mountComponent() {
     const node = document.createElement(this._currentElement.type)
