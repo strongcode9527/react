@@ -84,6 +84,7 @@ export class Component {
       DOM.replaceNode(this._renderedComponent._domNode, this._renderedNode)
     }
   }
+  
 }
 
 
@@ -92,7 +93,18 @@ class DomComponent {
     this._currentElement = element
     this._domNode = null
   }
+  _updateDOMChildren(prevPeops, nextProps) {
+    const childrenType = typeof nextProps.children
+    
+    if(nextType === 'undefined') return
 
+    if(nextType === 'string' || nextType === 'number') {
+      this._domNode.textContent = nextProps.children
+    }else {
+      this.updateDOMChildren(nextProps.children)
+    }
+
+  }
   updateNodeProperties(preProps, nextProps) {
     let styleUpdates = {}
     // 之前的状态全部清空。
@@ -138,7 +150,6 @@ class DomComponent {
 
       })
     }
-
   }
   updateComponent(preElement, nextElement) {
     this._currentElement = nextElement

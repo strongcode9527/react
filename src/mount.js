@@ -9,3 +9,16 @@ export function mount(element, node) {
   DOM.empty(node)
   DOM.appendChildren(node, renderedNode)
 }
+
+export function instantiateChildren(children) {
+  let childInstances = {}
+  
+  // 生成hash tree
+  traverseAllChildren(
+    children,
+    (traverseContext, children, name) => traverseContext[name] = children,
+    childInstances
+  )
+
+  return childInstances
+}
