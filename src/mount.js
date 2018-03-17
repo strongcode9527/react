@@ -1,24 +1,20 @@
-export function mountComponent(component) {
-  return component.mountComponent()
+const instantiateComponent = require('./instantiateComponent')
+const Reconciler = require('./Reconciler')
+const DOM = require('./DOM')
+
+function render(element, node) {
+  // todo: add update
+  mount(element, node)
 }
 
-export function mount(element, node) {
-  const component = instantiateComponent(element)
-  const renderNode = component.mountComponent()
-
+function mount(element, node) {
+  let component = instantiateComponent(element)
+  let renderedNode = Reconciler.mountComponent(component)
+  
   DOM.empty(node)
   DOM.appendChildren(node, renderedNode)
 }
 
-export function instantiateChildren(children) {
-  let childInstances = {}
-  
-  // 生成hash tree
-  traverseAllChildren(
-    children,
-    (traverseContext, children, name) => traverseContext[name] = children,
-    childInstances
-  )
-
-  return childInstances
+module.exports = {
+  render,
 }
