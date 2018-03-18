@@ -1,8 +1,8 @@
-const traverseAllChildren = require('./traverseAllChildren')
-const shouldUpdateComponent = require('./shouldUpdateComponent')
-const Reconciler = require('./Reconciler')
+import {unmountComponent} from './Reconciler'
+import traverseAllChildren from './traverseAllChildren'
+import shouldUpdateComponent from 'shouldUpdateComponent'
 
-function instantiateChild(childInstances, child, name) {
+export function instantiateChild(childInstances, child, name) {
   // don't know wtf happened here, cannot resolve it at top level
   // hack it in
   const instantiateComponent = require('./instantiateComponent')
@@ -12,7 +12,7 @@ function instantiateChild(childInstances, child, name) {
   }
 }
 
-function instantiateChildren(children) {
+export function instantiateChildren(children) {
   let childInstances = {}
 
   traverseAllChildren(children, instantiateChild, childInstances)
@@ -20,15 +20,15 @@ function instantiateChildren(children) {
   return childInstances
 }
 
-function unmountChildren(renderedChildren) {
+export function unmountChildren(renderedChildren) {
   if (!renderedChildren)  return
 
   Object.keys(renderedChildren).forEach(childKey => {
-    Reconciler.unmountComponent(renderedChildren[childKey])
+    unmountComponent(renderedChildren[childKey])
   })
 }
 
-function updateChildren(
+export function updateChildren(
   prevChildren, // instance tree
   nextChildren, // element tree
   mountNodes,
@@ -61,7 +61,7 @@ function updateChildren(
       if (prevChildComponent) {
         // only supports DOM node for now, should add composite component
         removedNodes[childKey] = prevChildComponent._domNode
-        Reconciler.unmountComponent(prevChildComponent)
+        unmountComponent(prevChildComponent)
       }
 
       // instantiate the new child. (insert)
@@ -77,13 +77,8 @@ function updateChildren(
     if (!nextChildren.hasOwnProperty(childKey)) {
       const prevChildComponent = prevChildren[childKey]
       removedNodes[childKey] = prevChildComponent
-      Reconciler.unmountComponent(prevChildComponent)
+      unmountComponent(prevChildComponent)
     }
   })
 }
 
-module.exports = {
-  instantiateChildren,
-  unmountChildren,
-  updateChildren,
-}

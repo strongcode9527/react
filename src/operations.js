@@ -1,10 +1,10 @@
-const UPDATE_TYPES = {
+export const UPDATE_TYPES = {
   INSERT: 1,
   MOVE: 2,
   REMOVE: 3
 }
 
-const OPERATIONS = {
+export const OPERATIONS = {
   insert(node, afterNode) {
     return {
       type: UPDATE_TYPES.INSERT,
@@ -29,7 +29,3 @@ const OPERATIONS = {
   }
 }
 
-module.exports = {
-  UPDATE_TYPES,
-  OPERATIONS
-}

@@ -1,20 +1,18 @@
-const instantiateComponent = require('./instantiateComponent')
-const Reconciler = require('./Reconciler')
-const DOM = require('./DOM')
 
-function render(element, node) {
+import {mountComponent} from './Reconciler'
+import {empty, appendChildren} from './DOM'
+import instantiateComponent from './instantiateComponent'
+
+export default function render(element, node) {
   // todo: add update
   mount(element, node)
 }
 
 function mount(element, node) {
   let component = instantiateComponent(element)
-  let renderedNode = Reconciler.mountComponent(component)
+  let renderedNode = mountComponent(component)
   
-  DOM.empty(node)
-  DOM.appendChildren(node, renderedNode)
+  empty(node)
+  appendChildren(node, renderedNode)
 }
 
-module.exports = {
-  render,
-}

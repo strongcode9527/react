@@ -1,9 +1,10 @@
-const assert = require('./assert')
-const shouldUpdateComponent = require('./shouldUpdateComponent')
-const instantiateComponent = require('./instantiateComponent')
-const Reconciler = require('./Reconciler')
+import assert from './assert'
+import {replaceNode} from './DOM'
+import instantiateComponent from './instantiateComponent'
+import shouldUpdateComponent from './shouldUpdateComponent'
+import {mountComponent, unmountComponent, receiveComponent} from './Reconciler'
 
-class Component {
+export default class Component {
   constructor(props) {
     this.props = props
     this._renderedComponent = null
@@ -29,7 +30,7 @@ class Component {
     let renderedComponent = instantiateComponent(renderedElement)
     this._renderedComponent = renderedComponent
 
-    let renderedNode = Reconciler.mountComponent(renderedComponent)
+    let renderedNode = mountComponent(renderedComponent)
     this._renderedNode = renderedNode
 
     return renderedNode
@@ -41,7 +42,7 @@ class Component {
     // call componentWillUnmount()
 
     // delegate the unmounting process to the rendered component
-    Reconciler.unmountComponent(this._renderedComponent)
+    unmountComponent(this._renderedComponent)
   }
 
   updateComponent(prevElement, nextElement) {
@@ -61,14 +62,14 @@ class Component {
     let nextRenderedElement = this.render()
 
     if (shouldUpdateComponent(prevRenderedElement, nextRenderedElement)) {
-      Reconciler.receiveComponent(this._renderedComponent, nextRenderedElement)
+      receiveComponent(this._renderedComponent, nextRenderedElement)
     } else {
       // re-mount everything from this point
-      Reconciler.unmountComponent(this._renderedComponent)
+      unmountComponent(this._renderedComponent)
 
       const nextRenderedComponent = instantiateComponent(nextElement)
-      this._renderedNode = Reconciler.mountComponent(nextRenderedComponent)
-      DOM.replaceNode(this._renderedComponent._domNode, this._renderedNode)
+      this._renderedNode = mountComponent(nextRenderedComponent)
+      replaceNode(this._renderedComponent._domNode, this._renderedNode)
     }
   }
 
@@ -78,4 +79,3 @@ class Component {
   }
 }
 
-module.exports = Component

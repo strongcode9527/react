@@ -1,8 +1,10 @@
-const ChildReconciler = require('./ChildReconciler')
-const Reconciler = require('./Reconciler')
-const { UPDATE_TYPES, OPERATIONS } = require('./operations')
-const traverseAllChildren = require('./traverseAllChildren')
-const DOM = require('./DOM')
+
+
+import {instantiateChildren, updateChildren} from './ChildReconciler'
+import {mountComponent} from './Reconciler'
+import {} from './operations'
+import traverseAllChildren from './traverseAllChildren'
+import {insertAfter, removeChild, } from './DOM'
 
 function flattenChildren(children) {
   const flattenedChildren = {}
@@ -19,12 +21,12 @@ function processQueue(parentNode, updates) {
   updates.forEach(update => {
     switch (update.type) {
       case UPDATE_TYPES.INSERT:
-        DOM.insertAfter(parentNode, update.content, update.afterNode)
+        insertAfter(parentNode, update.content, update.afterNode)
         break
 
       case UPDATE_TYPES.MOVE:
         // this automatically removes and inserts the new child
-        DOM.insertAfter(
+        insertAfter(
           parentNode,
           update.content,
           update.afterNode
@@ -32,7 +34,7 @@ function processQueue(parentNode, updates) {
         break
 
       case UPDATE_TYPES.REMOVE:
-        DOM.removeChild(parentNode, update.fromNode)
+        removeChild(parentNode, update.fromNode)
         break
 
       default:
@@ -41,14 +43,14 @@ function processQueue(parentNode, updates) {
   })
 }
 
-class MultiChild {
+export default class MultiChild {
   constructor() {
     this._renderedChildren = null
   }
 
   mountChildren(children) {
     // children elements => children nodes
-    const childrenComponents = ChildReconciler.instantiateChildren(children)
+    const childrenComponents =  instantiateChildren(children)
     this._renderedChildren = childrenComponents
 
     /*
@@ -63,7 +65,7 @@ class MultiChild {
 
       childComponent._mountIndex = i
 
-      return Reconciler.mountComponent(childComponent)
+      return mountComponent(childComponent)
     })
 
     return childrenNodes
@@ -82,7 +84,7 @@ class MultiChild {
     let mountNodes = []
     let removedNodes = {}
     
-    ChildReconciler.updateChildren(
+    updateChildren(
       prevRenderedChildren,
       nextRenderedChildren,
       mountNodes,
@@ -153,4 +155,3 @@ class MultiChild {
   }
 }
 
-module.exports = MultiChild

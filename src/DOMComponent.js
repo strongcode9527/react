@@ -1,8 +1,8 @@
-const MultiChild = require('./MultiChild')
-const DOM = require('./DOM')
-const assert = require('./assert')
+import assert from './assert'
+import MultiChild from './MultiChild'
+import {removeProperty, setProperty, updateStyles, appendChildren} from './DOM'
 
-class DOMComponent extends MultiChild {
+export default class DOMComponent extends MultiChild {
   constructor(element) {
     super()
     this._currentElement = element
@@ -40,7 +40,7 @@ class DOMComponent extends MultiChild {
           styleUpdates[styleName] = ''
         })
       } else {
-        DOM.removeProperty(this._domNode, propName)
+        removeProperty(this._domNode, propName)
       }
     })
 
@@ -57,11 +57,11 @@ class DOMComponent extends MultiChild {
           styleUpdates[styleName] = nextProps.style[styleName]
         })
       } else {
-        DOM.setProperty(this._domNode, propName, nextProps[propName])
+        setProperty(this._domNode, propName, nextProps[propName])
       }
     })
 
-    DOM.updateStyles(this._domNode, styleUpdates)
+    updateStyles(this._domNode, styleUpdates)
   }
 
   _createInitialDOMChildren(props) {
@@ -76,7 +76,7 @@ class DOMComponent extends MultiChild {
     } else if (props.children) {
       // Single element or Array
       const childrenNodes = this.mountChildren(props.children)
-      DOM.appendChildren(this._domNode, childrenNodes)
+      appendChildren(this._domNode, childrenNodes)
     }
   }
 
@@ -96,5 +96,3 @@ class DOMComponent extends MultiChild {
     }
   }
 }
-
-module.exports = DOMComponent
