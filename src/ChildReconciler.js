@@ -1,12 +1,9 @@
-import {unmountComponent} from './Reconciler'
+import {unmountComponent, receiveComponent, mountComponent} from './Reconciler'
 import traverseAllChildren from './traverseAllChildren'
-import shouldUpdateComponent from 'shouldUpdateComponent'
+import instantiateComponent from './instantiateComponent'
+import shouldUpdateComponent from './shouldUpdateComponent'
 
 export function instantiateChild(childInstances, child, name) {
-  // don't know wtf happened here, cannot resolve it at top level
-  // hack it in
-  const instantiateComponent = require('./instantiateComponent')
-
   if (!childInstances[name]) {
     childInstances[name] = instantiateComponent(child)
   }
@@ -35,7 +32,7 @@ export function updateChildren(
   removedNodes
 ) {
   // hack in the import function
-  const instantiateComponent = require('./instantiateComponent')
+
 
   // we use the index of the tree to track the updates of the component, like `0.0`
   Object.keys(nextChildren).forEach((childKey) => {
@@ -51,7 +48,7 @@ export function updateChildren(
     if (prevElement && shouldUpdateComponent(prevElement, nextElement)) {
       // this will do the recursive update of the sub tree
       // and this line is basically the actual update
-      Reconciler.receiveComponent(prevChildComponent, nextElement)
+      receiveComponent(prevChildComponent, nextElement)
       // and we do not need the new element
       // note that we are converting the `nextChildren` object from an
       // element tree to a component instance tree during all this process
@@ -68,7 +65,7 @@ export function updateChildren(
       const nextComponent = instantiateComponent(nextElement)
       nextChildren[childKey] = nextComponent
 
-      mountNodes.push(Reconciler.mountComponent(nextComponent))
+      mountNodes.push(mountComponent(nextComponent))
     }
   })
 

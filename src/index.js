@@ -1,10 +1,9 @@
-import {mount} from './mount.js'
-export {Component} from './component'
-import {createElement} from './element'
+import render from './mount'
+import Component from './Component'
+import createElement from './Element'
 
-export default function Strong() {
-
+export default {
+  render,
+  Component,
+  createElement,
 }
-
-Strong.createElement = createElement
-Strong.mount = mount

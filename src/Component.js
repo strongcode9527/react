@@ -22,7 +22,7 @@ export default class Component {
   _construct(element) {
     this._currentElement = element
   }
-
+  // 因为class component
   mountComponent() {
     // we simply assume the render method returns a single element
     let renderedElement = this.render()

@@ -1,8 +1,6 @@
-
-
-import {instantiateChildren, updateChildren} from './ChildReconciler'
+import {instantiateChildren, updateChildren, unmountChildren} from './ChildReconciler'
 import {mountComponent} from './Reconciler'
-import {} from './operations'
+import {OPERATIONS, UPDATE_TYPES} from './operations'
 import traverseAllChildren from './traverseAllChildren'
 import {insertAfter, removeChild, } from './DOM'
 
@@ -72,7 +70,7 @@ export default class MultiChild {
   }
 
   unmountChildren() {
-    ChildReconciler.unmountChildren(this._renderedChildren)
+    unmountChildren(this._renderedChildren)
   }
 
   updateChildren(nextChildren) {
