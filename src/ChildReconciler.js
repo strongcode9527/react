@@ -1,7 +1,7 @@
-import {unmountComponent, receiveComponent, mountComponent} from './Reconciler'
 import traverseAllChildren from './traverseAllChildren'
 import instantiateComponent from './instantiateComponent'
 import shouldUpdateComponent from './shouldUpdateComponent'
+import {unmountComponent, receiveComponent, mountComponent} from './Reconciler'
 
 export function instantiateChild(childInstances, child, name) {
   if (!childInstances[name]) {
