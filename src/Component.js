@@ -1,4 +1,5 @@
 import assert from './assert'
+import {lifeCycle} from './util'
 import {replaceNode} from './DOM'
 import instantiateComponent from './instantiateComponent'
 import shouldUpdateComponent from './shouldUpdateComponent'
@@ -6,11 +7,14 @@ import {mountComponent, unmountComponent, receiveComponent} from './Reconciler'
 
 export default class Component {
   constructor(props) {
+
     this.props = props
-    this._renderedComponent = null
+
+    this._pendingState = null
     this._renderedNode = null
     this._currentElement = null
-    this._pendingState = null
+    this._renderedComponent = null
+
     assert(this.render)
   }
 
@@ -33,6 +37,9 @@ export default class Component {
     let renderedNode = mountComponent(renderedComponent)
     this._renderedNode = renderedNode
 
+    // 调用componentDidMount生命周期函数
+    this.componentDidMount && typeof this.componentDidMount === 'function' && this.componentDidMount()
+
     return renderedNode
   }
 
@@ -49,6 +56,7 @@ export default class Component {
     if (prevElement !== nextElement) {
       // should get re-render because of the changes of props passed down from parents
       // react calls componentWillReceiveProps here
+      lifeCycle(this, 'componentWillReceiveProps', [nextElement.props, prevElement.props])
     }
 
     // re-bookmarking
