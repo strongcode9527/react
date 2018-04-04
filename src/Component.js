@@ -37,8 +37,6 @@ export default class Component {
     let renderedNode = mountComponent(renderedComponent)
     this._renderedNode = renderedNode
 
-    // 调用componentDidMount生命周期函数
-    this.componentDidMount && typeof this.componentDidMount === 'function' && this.componentDidMount()
 
     return renderedNode
   }
