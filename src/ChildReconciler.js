@@ -5,7 +5,7 @@ import {unmountComponent, receiveComponent, mountComponent} from './Reconciler'
 
 export function instantiateChild(childInstances, child, name) {
   if (!childInstances[name]) {
-    childInstances[name] = instantiateComponent(child)
+    childInstances[name] = instantiateComponent(child || '')
   }
 }
 

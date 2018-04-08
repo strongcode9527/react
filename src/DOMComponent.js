@@ -67,11 +67,8 @@ export default class DOMComponent extends MultiChild {
   _createInitialDOMChildren(props) {
     // this is where we go into the children of the dom component and 
     // recursively mount and append each of the childNode to the parent node
-    if (
-      typeof props.children === 'string' ||
-      typeof props.children === 'number'
-    ) {
-      const textNode = document.createTextNode(props.children)
+    if (['string', 'number', 'undefined'].indexOf(typeof props.children) !== -1) {
+      const textNode = document.createTextNode(props.children || '')
       this._domNode.appendChild(textNode)
     } else if (props.children) {
       // Single element or Array

@@ -19,7 +19,7 @@ class App extends Strong.Component {
     return (
       <div>
         <h3>Heading 3</h3>
-        <SmallHeaderWithState number={this.state.nuber} />
+        <SmallHeaderWithState number={this.state.numer} />
       </div>
     )
   }
@@ -32,6 +32,7 @@ class SmallHeaderWithState extends Strong.Component {
 
   render() {
     const {number} = this.props
+    console.log(this.props)
     return (
       <div>
         <div style={{

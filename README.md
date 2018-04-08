@@ -15,3 +15,42 @@
   - [ ] 支持key的diff
   - [ ] 支持function组件命名方式
   - [ ] 支持组件直接返回组件
+
+
+---
+
+## 此项目的一个运行的流程：
+ 
+1. 首先jsx会返回一个element，类似于这种
+
+```
+
+{
+  type: 'div',
+  props:{
+    children: [],
+    ....
+  }
+}
+
+
+```
+
+2. 根据render返回的element进行组件实例化。
+
+```
+
+let component = instantiateComponent(element)
+
+```
+
+3. 直接将组建的相关内容直接挂载到相关的DOM元素。
+
+```
+ let renderedNode = mountComponent(component)
+  
+ empty(node)
+ appendChildren(node, renderedNode)
+
+
+```
