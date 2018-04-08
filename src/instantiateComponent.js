@@ -14,10 +14,10 @@ export default function instantiateComponent(element) {
     componentInstance._construct(element)
   } else if (typeof element.type === 'string') {
     componentInstance = new DOMComponent(element)
-  } else if (typeof element === 'string' || typeof element === 'number') {
+  } else if (['string', 'number', 'undefined'].indexOf(typeof elemen) !== -1) {
     componentInstance = new DOMComponent({
       type: 'span',
-      props: { children: element }
+      props: { children: element || ''}
     })
   }
 

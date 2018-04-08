@@ -37,7 +37,6 @@ export default class Component {
     let renderedNode = mountComponent(renderedComponent)
     this._renderedNode = renderedNode
 
-
     return renderedNode
   }
 
