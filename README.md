@@ -54,3 +54,7 @@ let component = instantiateComponent(element)
 
 
 ```
+
+## mount 的一些细节处理
+
+利用多态，也就是不管是Component还是DOMComponent都统一接口，mountComponent去挂载组件，我的理解就是Component组件来保存组件的状态，而真正挂载DOM元素，以及递归mount子组件都发生在DOMComponent。而update的实现也基本是这个思路。
