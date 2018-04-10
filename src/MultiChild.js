@@ -46,8 +46,13 @@ export default class MultiChild {
     this._renderedChildren = null
   }
 
+  /**
+   * 此函数岁然是直接mount，但是其内部是存在一个实例化组件的作的。
+   * @param {*} children 
+   */
   mountChildren(children) {
-    // children elements => children nodes
+   
+    // 在这里取得所有的子组件。
     const childrenComponents =  instantiateChildren(children)
     this._renderedChildren = childrenComponents
 
@@ -57,7 +62,7 @@ export default class MultiChild {
       '.0.1': {_currentElement, ...}
     }
     */
-
+    // 在这里完成所有子组件的mount过程。
     const childrenNodes = Object.keys(childrenComponents).map((childKey, i) => {
       const childComponent = childrenComponents[childKey]
 

@@ -8,11 +8,11 @@ class App extends Strong.Component {
 
     this.state = { number: 0 }
 
-    setInterval(() => {
-      this.setState({
-        number: this.state.number + 1
-      })
-    }, 1000)
+    // setInterval(() => {
+    //   this.setState({
+    //     number: this.state.number + 1
+    //   })
+    // }, 1000)
 
   }
   render() {

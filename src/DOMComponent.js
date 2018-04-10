@@ -63,7 +63,10 @@ export default class DOMComponent extends MultiChild {
 
     updateStyles(this._domNode, styleUpdates)
   }
-
+  /**
+   * 这个mount的关键，在这里完成递归实例子组件
+   * @param {*} props 
+   */
   _createInitialDOMChildren(props) {
     // this is where we go into the children of the dom component and 
     // recursively mount and append each of the childNode to the parent node
