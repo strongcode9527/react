@@ -1,3 +1,4 @@
+// 此文件主要是为了生成hashtree，并不会实例化任何组件
 const SEPARATOR = '.'
 const SUBSEPARATOR = ':'
 

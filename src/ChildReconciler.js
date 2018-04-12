@@ -3,6 +3,7 @@ import instantiateComponent from './instantiateComponent'
 import shouldUpdateComponent from './shouldUpdateComponent'
 import {unmountComponent, receiveComponent, mountComponent} from './Reconciler'
 
+// 在这里实例子组件
 export function instantiateChild(childInstances, child, name) {
   if (!childInstances[name]) {
     childInstances[name] = instantiateComponent(child || '')
