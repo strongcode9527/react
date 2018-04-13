@@ -55,7 +55,7 @@ export default class MultiChild {
     // 在这里取得所有的子组件。
     const childrenComponents =  instantiateChildren(children)
     this._renderedChildren = childrenComponents
-
+    
     /*
     {
       '.0.0': {_currentElement, ...}
@@ -149,7 +149,7 @@ export default class MultiChild {
       )
     })
 
-    // do the actual updates
+    // 在这里进行dom的更新。
     processQueue(this._domNode, updates)
 
     // at this point, nextRenderedChildren has already become a component tree

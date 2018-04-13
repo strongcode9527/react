@@ -49,6 +49,9 @@ export default class Component {
     unmountComponent(this._renderedComponent)
   }
 
+  // 更新操作，一定是由class组件生成。
+  // 这里的updateComponent配合DomComponent的updateComponent，借口命名是一致的。利于receiveComponents函数实现多态
+  
   updateComponent(prevElement, nextElement) {
     if (prevElement !== nextElement) {
       // should get re-render because of the changes of props passed down from parents

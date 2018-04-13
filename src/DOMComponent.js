@@ -80,6 +80,7 @@ export default class DOMComponent extends MultiChild {
     }
   }
 
+  // 在这里实现子元素的递归更新。
   _updateDOMChildren(prevProps, nextProps) {
     const prevType = typeof prevProps.children
     const nextType = typeof nextProps.children
@@ -92,6 +93,7 @@ export default class DOMComponent extends MultiChild {
     if (nextType === 'string' || nextType === 'number') {
       this._domNode.textContent = nextProps.children
     } else {
+      // 在这里进入MultiChild进行更新。
       this.updateChildren(nextProps.children)
     }
   }
