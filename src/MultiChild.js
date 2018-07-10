@@ -1,8 +1,9 @@
-import {instantiateChildren, updateChildren, unmountChildren} from './ChildReconciler'
+import assert from './assert'
 import {mountComponent} from './Reconciler'
+import {insertAfter, removeChild, } from './DOM'
 import {OPERATIONS, UPDATE_TYPES} from './operations'
 import traverseAllChildren from './traverseAllChildren'
-import {insertAfter, removeChild, } from './DOM'
+import {instantiateChildren, updateChildren, unmountChildren} from './ChildReconciler'
 
 function flattenChildren(children) {
   const flattenedChildren = {}
