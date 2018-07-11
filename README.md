@@ -13,7 +13,7 @@
 **预计新增加的特性有：**
   - [x] 支持生命周期函数： componentDidMount, componentWillUnmount等
   - [ ] 支持key的diff
-  - [ ] 支持function组件命名方式
+  - [x] 支持function组件命名方式
   - [ ] 支持组件直接返回组件
 
 

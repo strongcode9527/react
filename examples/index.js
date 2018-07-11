@@ -25,6 +25,13 @@ class SmallHeaderWithState extends Strong.Component {
   }
 }
 
+function Add({name}) {
+  return (
+    <div>
+      {name}
+    </div>
+  )
+}
 
 class App extends Strong.Component {
   constructor(props) {
@@ -44,6 +51,7 @@ class App extends Strong.Component {
       <div>
         <h3>Heading 3</h3>
         <SmallHeaderWithState number={this.state.number} />
+        <Add name="strong"/>
       </div>
     )
   }
