@@ -33,6 +33,19 @@ function Add({name}) {
   )
 }
 
+
+class Acc extends Strong.Component {
+  constructor(props){
+    super(props)
+  }
+  render() {
+
+    return <Add nam={this.props.name}/>
+  }
+}
+
+
+
 class App extends Strong.Component {
   constructor(props) {
     super(props)
@@ -51,7 +64,7 @@ class App extends Strong.Component {
       <div>
         <h3>Heading 3</h3>
         <SmallHeaderWithState number={this.state.number} />
-        <Add name="strong"/>
+        <Acc name="strong"/>
       </div>
     )
   }
