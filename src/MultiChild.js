@@ -5,6 +5,9 @@ import {OPERATIONS, UPDATE_TYPES} from './operations'
 import traverseAllChildren from './traverseAllChildren'
 import {instantiateChildren, updateChildren, unmountChildren} from './ChildReconciler'
 
+
+// 把将要对比的children生成hashTree,便于对比。
+
 function flattenChildren(children) {
   const flattenedChildren = {}
   traverseAllChildren(
@@ -53,8 +56,9 @@ export default class MultiChild {
    */
   mountChildren(children) {
    
-    // 在这里取得所有的子组件。
+    // 实例化所有子组件，并生成hashTree
     const childrenComponents =  instantiateChildren(children)
+    // this._renderdChildren 就是生成的hashTree
     this._renderedChildren = childrenComponents
     
     /*

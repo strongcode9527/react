@@ -10,6 +10,7 @@ function getComponentKey(component, index) {
 }
 
 
+// nameSoFar就是hash tree中的每个component的key
 
 function traverseAllChildrenImpl(
   children,
@@ -46,6 +47,7 @@ function traverseAllChildrenImpl(
   return subtreeCount
 }
 
+// 生成hashTree
 export default function traverseAllChildren(children, callback, traverseContext) {
   return traverseAllChildrenImpl(children, '', callback, traverseContext)
 }
