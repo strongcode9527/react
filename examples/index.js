@@ -6,6 +6,12 @@ class SmallHeaderWithState extends Strong.Component {
     super(props)
   }
 
+  componentWillReceiveProps(nextProps, nextState) {
+    console.log('receive', nextProps, nextState)
+  }
+  componentDidUpdate(preProps, nextState) {
+    console.log('did', preProps, nextState)
+  }
   render() {
     const {number} = this.props
 

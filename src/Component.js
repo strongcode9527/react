@@ -56,8 +56,19 @@ export default class Component {
     if (prevElement !== nextElement) {
       // should get re-render because of the changes of props passed down from parents
       // react calls componentWillReceiveProps here
-      lifeCycle(this, 'componentWillReceiveProps', [nextElement.props, prevElement.props])
+      lifeCycle(this, 'componentWillReceiveProps', [nextElement.props, nextElement.state])
     }
+
+    // shouldUpdate
+    if(this.componentShouldUpdate && !lifeCycle(this, 'componentShouldUpdate', [nextElement.props, this._pendingState])) {
+      return
+    }
+
+
+    // componentWillUpdate
+
+    lifeCycle(this, 'componentWillUpdate', [nextElement.props, this._pendingState])
+
 
     // re-bookmarking
     this._currentElement = nextElement
@@ -79,6 +90,7 @@ export default class Component {
       this._renderedNode = mountComponent(nextRenderedComponent)
       replaceNode(this._renderedComponent._domNode, this._renderedNode)
     }
+    lifeCycle(this, 'componentDidUpdate', [nextElement.props, this._pendingState])
   }
 
   performUpdateIfNecessary() {
