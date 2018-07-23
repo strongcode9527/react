@@ -58,7 +58,7 @@ class App extends Strong.Component {
 
     this.state = { number: 0 }
 
-    setInterval(() => {
+    setInterval( () => {
       this.setState({
         number: this.state.number + 1
       })

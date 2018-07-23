@@ -34,7 +34,6 @@ export function updateChildren(
 ) {
   // hack in the import function
 
-
   // we use the index of the tree to track the updates of the component, like `0.0`
   Object.keys(nextChildren).forEach((childKey) => {
     const prevChildComponent = prevChildren[childKey]
