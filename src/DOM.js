@@ -14,6 +14,7 @@ export function updateStyles(node, styleObj) {
 
 export function setProperty(node, attr, value) {
   if (attr === 'children')  return
+  console.log(attr)
   node.setAttribute(attr, value)
 }
 

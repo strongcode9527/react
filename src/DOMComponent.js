@@ -36,6 +36,8 @@ export default class DOMComponent extends MultiChild {
 
   _updateNodeProperties(prevProps, nextProps) {
     let styleUpdates = {}
+    
+    console.log(prevProps, nextProps)
 
     // Loop over previous props so we know what we need to remove
     Object.keys(prevProps).forEach((propName) => {
