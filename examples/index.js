@@ -22,6 +22,7 @@ class SmallHeaderWithState extends Strong.Component {
             color: 'red',
             fontSize: '36px',
           }}
+          data-index={2}
         >
           SmallHeader
         </div>

@@ -30,6 +30,10 @@ export default class DOMComponent extends MultiChild {
     this._updateDOMChildren(prevElement.props, nextElement.props)
   }
 
+  // dom元素绑定事件的入口就在这里，。
+  // 目前支持绑定的dom properties只支持style
+  // 计划支持所有的properties。
+
   _updateNodeProperties(prevProps, nextProps) {
     let styleUpdates = {}
 
