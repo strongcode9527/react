@@ -1,6 +1,8 @@
 import assert from './assert'
 import MultiChild from './MultiChild'
 import {removeProperty, setProperty, updateStyles, appendChildren} from './DOM'
+import {updateStyle} from './updateProps'
+import * as DOM from './DOM'
 
 export default class DOMComponent extends MultiChild {
   constructor(element) {
@@ -35,57 +37,28 @@ export default class DOMComponent extends MultiChild {
   // 计划支持所有的properties。
 
   _updateNodeProperties(prevProps, nextProps) {
-    let styleUpdates = {}
-    
     console.log(prevProps, nextProps)
-
-    // Loop over previous props so we know what we need to remove
-    Object.keys(prevProps).forEach((propName) => {
-      if (propName === 'style') {
-        Object.keys(prevProps['style']).forEach((styleName) => {
-          styleUpdates[styleName] = ''
-        })
-      } else {
-        removeProperty(this._domNode, propName)
-      }
-    })
-
-    // update / add new attributes
-    Object.keys(nextProps).forEach((propName) => {
-      let prevValue = prevProps[propName]
-      let nextValue = nextProps[propName]
-
-      if (prevValue === nextValue)  return
-
-      if (propName === 'style') {
-        Object.keys(nextProps['style']).forEach((styleName) => {
-          // overwrite the existing styles
-          styleUpdates[styleName] = nextProps.style[styleName]
-        })
-      } else {
-        setProperty(this._domNode, propName, nextProps[propName])
-      }
-    })
-
-    updateStyles(this._domNode, styleUpdates)
+    if(prevProps.style || nextProps.style) {
+      console.log('in')
+      updateStyle(this._domNode, prevProps.style || {}, nextProps.style)
+    }
   }
-  /**
-   * 这个mount的关键，在这里完成递归实例子组件
-   * @param {*} props 
-   */
+
   _createInitialDOMChildren(props) {
     // this is where we go into the children of the dom component and 
     // recursively mount and append each of the childNode to the parent node
-    if (['string', 'number', 'undefined'].indexOf(typeof props.children) !== -1) {
-      const textNode = document.createTextNode(props.children || '')
+    if (
+      typeof props.children === 'string' ||
+      typeof props.children === 'number'
+    ) {
+      const textNode = document.createTextNode(props.children)
       this._domNode.appendChild(textNode)
     } else if (props.children) {
       // Single element or Array
       const childrenNodes = this.mountChildren(props.children)
-      appendChildren(this._domNode, childrenNodes)
+      DOM.appendChildren(this._domNode, childrenNodes)
     }
   }
-
   // 在这里实现子元素的递归更新。
   _updateDOMChildren(prevProps, nextProps) {
     const prevType = typeof prevProps.children
