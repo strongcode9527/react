@@ -1,7 +1,7 @@
 import assert from './assert'
 import MultiChild from './MultiChild'
 import {removeProperty, setProperty, updateStyles, appendChildren} from './DOM'
-import {updateStyle} from './updateProps'
+import {updateProps} from './updateProps'
 import * as DOM from './DOM'
 
 export default class DOMComponent extends MultiChild {
@@ -37,11 +37,19 @@ export default class DOMComponent extends MultiChild {
   // 计划支持所有的properties。
 
   _updateNodeProperties(prevProps, nextProps) {
-    console.log(prevProps, nextProps)
-    if(prevProps.style || nextProps.style) {
-      console.log('in')
-      updateStyle(this._domNode, prevProps.style || {}, nextProps.style)
-    }
+    const prevKeys = Object.keys(prevProps),
+          nextKeys = Object.keys(nextProps),
+          allUniqueKeys = [...(new Set([...prevKeys, ...nextKeys]))] 
+
+    console.log(prevProps, nextProps, allUniqueKeys)
+
+    
+    allUniqueKeys.forEach(key => {
+      if(key !== 'children') {
+        updateProps(key)(this._domNode, key, prevProps[key], nextProps[key])
+      }
+    })
+  
   }
 
   _createInitialDOMChildren(props) {

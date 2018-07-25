@@ -1,18 +1,18 @@
-import {updateStyles} from './DOM'
+import {updateStyles, removeProperty, setProperty} from './DOM'
 
-export const getPropsType = (propName) => {
+export const updateProps = (propName) => {
   if(propName === 'ref') {
     return 'ref'
   }else if(propName === 'style') {
-    return 'style'
+    return updateStyle
   }else if(/^on[A-Z]/.test(propName)) {
-    return 'event'
+    return updateEvent
   }else {
-    return 'common'
+    return updateAttr
   } 
 }
 
-export function updateStyle(domNode, preStyle, nextStyle) {
+function updateStyle(domNode, key, preStyle = {}, nextStyle = {}) {
   let styleUpdates = {},
       nextKeys = Object.keys(nextStyle)
   // 添加修改
@@ -38,8 +38,19 @@ export function updateStyle(domNode, preStyle, nextStyle) {
   updateStyles(domNode, styleUpdates)
 }
 
+function updateEvent(domNode, key, preProps, nextProps) {
+  
+}
 
-
+function updateAttr(domNode, key, preAtt, nextAtt) {
+  if(preAtt === nextAtt) {
+    return
+  }else if(preAtt && typeof nextAtt === 'undefined') {
+    removeProperty(domNode, key)
+  }else {
+    setProperty(domNode, key, nextAtt)
+  }
+}
 
 
 
