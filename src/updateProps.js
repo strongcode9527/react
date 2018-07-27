@@ -38,8 +38,17 @@ function updateStyle(domNode, key, preStyle = {}, nextStyle = {}) {
   updateStyles(domNode, styleUpdates)
 }
 
-function updateEvent(domNode, key, preProps, nextProps) {
-  
+function updateEvent(domNode, key, prevCallback, nextCallback) {
+  if(!nextCallback) {
+    // 需要删除绑定函数
+  }
+  // 添加回调函数
+  else {
+    domNode._events = domNode.events || {}
+    domNode._events[key] = nextCallback
+
+    addEvent(document, key, dispatchEvent)
+  }
 }
 
 function updateAttr(domNode, key, preAtt, nextAtt) {
@@ -52,7 +61,14 @@ function updateAttr(domNode, key, preAtt, nextAtt) {
   }
 }
 
+function addEvent(dom, key, callback) {
+  dom.addEventListener(key, callback, false )
+}
 
+// 真正的执行函数。
+function dispatchEvent() {
+
+}
 
 
 

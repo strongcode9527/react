@@ -45,7 +45,7 @@ export default class DOMComponent extends MultiChild {
 
     
     allUniqueKeys.forEach(key => {
-      if(key !== 'children') {
+      if(key !== 'children' && prevProps[key] !== nextProps[key]) {
         updateProps(key)(this._domNode, key, prevProps[key], nextProps[key])
       }
     })
