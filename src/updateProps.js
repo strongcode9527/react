@@ -1,4 +1,5 @@
 import {updateStyles, removeProperty, setProperty} from './DOM'
+import {SyntheticEvent} from './event'
 
 export const updateProps = (propName) => {
   if(propName === 'ref') {
@@ -45,7 +46,8 @@ function updateEvent(domNode, key, prevCallback, nextCallback) {
   // 添加回调函数
   else {
     domNode._events = domNode.events || {}
-    domNode._events[key] = nextCallback
+    // 将onClick转换为click
+    domNode._events[key.slice(2).toLocaleLowerCase()] = nextCallback
 
     addEvent(document, key, dispatchEvent)
   }
@@ -66,11 +68,41 @@ function addEvent(dom, key, callback) {
 }
 
 // 真正的执行函数。
-function dispatchEvent() {
-
+function dispatchEvent(e) {
+  let path = detectPath(e)
+  triggerEvents(e, path)
 }
 
 
+function triggerEvents(e, path) {
+  const {type} = e,
+        event = SyntheticEvent(e)
+
+  path.forEach(domNode => {
+    const callback = domNode._events[type]
+    callback.call(event)
+  }) 
+  
+}
+
+function detectPath(e, end) {
+  let {target, type} = e,
+        path = [target]
+
+  end = end || document
+
+  while(target !== end) {
+    target = target.parentNode
+
+    if(!target) break
+
+    if(target._events[type]) {
+      path.push(target)
+    }
+  }
+
+  return path
+}
 
 
 

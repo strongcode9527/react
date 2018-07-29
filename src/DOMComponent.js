@@ -1,6 +1,5 @@
 import assert from './assert'
 import MultiChild from './MultiChild'
-import {removeProperty, setProperty, updateStyles, appendChildren} from './DOM'
 import {updateProps} from './updateProps'
 import * as DOM from './DOM'
 
