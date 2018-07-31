@@ -1,14 +1,18 @@
 
 /**事件合成，暂时这么写 */
-export function SyntheticEvent(event) {
+export function SyntheticEvent(event, dom) {
   if (event.nativeEvent) {
       return event;
   }
+  console.log(event)
   for (var i in event) {
       if (!eventProto[i]) {
           this[i] = event[i];
       }
   }
+  
+  this.currentTarget = dom
+
   if (!this.target) {
       this.target = event.srcElement;
   }

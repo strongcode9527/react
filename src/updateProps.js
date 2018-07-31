@@ -1,5 +1,11 @@
-import {updateStyles, removeProperty, setProperty} from './DOM'
+
+
 import {SyntheticEvent} from './event'
+import {updateStyles, removeProperty, setProperty} from './DOM'
+
+const R = require('ramda')
+
+console.log(R)
 
 export const updateProps = (propName) => {
   if(propName === 'ref') {
@@ -40,6 +46,7 @@ function updateStyle(domNode, key, preStyle = {}, nextStyle = {}) {
 }
 
 function updateEvent(domNode, key, prevCallback, nextCallback) {
+  const modifyKey = key.slice(2).toLocaleLowerCase()
   if(!nextCallback) {
     // 需要删除绑定函数
   }
@@ -47,9 +54,9 @@ function updateEvent(domNode, key, prevCallback, nextCallback) {
   else {
     domNode._events = domNode.events || {}
     // 将onClick转换为click
-    domNode._events[key.slice(2).toLocaleLowerCase()] = nextCallback
-
-    addEvent(document, key, dispatchEvent)
+    domNode._events[modifyKey] = nextCallback
+    console.log('in event', key)
+    addEvent(document, modifyKey, dispatchEvent)
   }
 }
 
@@ -69,20 +76,22 @@ function addEvent(dom, key, callback) {
 
 // 真正的执行函数。
 function dispatchEvent(e) {
+  
   let path = detectPath(e)
+
   triggerEvents(e, path)
 }
 
 
 function triggerEvents(e, path) {
-  const {type} = e,
-        event = SyntheticEvent(e)
-
-  path.forEach(domNode => {
-    const callback = domNode._events[type]
-    callback.call(event)
-  }) 
+  const {type} = e
+        
   
+  path.forEach(domNode => {
+    const callback = R.path(['_events', type], domNode),
+          event = new SyntheticEvent(e, domNode)
+    callback && callback.call(domNode, event)
+  }) 
 }
 
 function detectPath(e, end) {
@@ -91,12 +100,12 @@ function detectPath(e, end) {
 
   end = end || document
 
-  while(target !== end) {
+  while(target !== end && target) {
     target = target.parentNode
 
     if(!target) break
 
-    if(target._events[type]) {
+    if(R.path(['_events', type], target)) {
       path.push(target)
     }
   }

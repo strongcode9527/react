@@ -7,10 +7,10 @@ class SmallHeaderWithState extends Strong.Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    console.log('receive', nextProps, nextState)
+  
   }
   componentDidUpdate(preProps, nextState) {
-    console.log('did', preProps, nextState)
+ 
   }
   render() {
     const {number} = this.props
@@ -59,17 +59,23 @@ class App extends Strong.Component {
 
     this.state = { number: 0 }
 
-    // setInterval( () => {
-    //   this.setState({
-    //     number: this.state.number + 1
-    //   })
-    // }, 1000)
-
   }
+
+  handleClick = (e) => {
+    console.log('in callback', e)
+    this.setState({
+      number: this.state.number + 1,
+    })
+  }
+
+  handleClickParent = (e) => {
+    console.log('in parent', e)
+  }
+
   render() {
     return (
-      <div>
-        <h3>Heading 3</h3>
+      <div onClick={this.handleClickParent}>
+        <h3 onClick={this.handleClick}>Heading 3</h3>
         <SmallHeaderWithState number={this.state.number} />
         <Acc name="strong"/>
       </div>

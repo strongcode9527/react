@@ -40,9 +40,6 @@ export default class DOMComponent extends MultiChild {
           nextKeys = Object.keys(nextProps),
           allUniqueKeys = [...(new Set([...prevKeys, ...nextKeys]))] 
 
-    console.log(prevProps, nextProps, allUniqueKeys)
-
-    
     allUniqueKeys.forEach(key => {
       if(key !== 'children' && prevProps[key] !== nextProps[key]) {
         updateProps(key)(this._domNode, key, prevProps[key], nextProps[key])
