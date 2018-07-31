@@ -87,10 +87,15 @@ function triggerEvents(e, path) {
   const {type} = e
         
   
-  path.forEach(domNode => {
+  path.every(domNode => {
     const callback = R.path(['_events', type], domNode),
           event = new SyntheticEvent(e, domNode)
     callback && callback.call(domNode, event)
+
+    // 如果禁止冒泡，则停止循环
+    if(event._stopPropagation) return false
+    
+    return true
   }) 
 }
 

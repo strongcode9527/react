@@ -66,6 +66,8 @@ class App extends Strong.Component {
     this.setState({
       number: this.state.number + 1,
     })
+    e.stopPropagation()
+    e.preventDefault()
   }
 
   handleClickParent = (e) => {
@@ -75,7 +77,7 @@ class App extends Strong.Component {
   render() {
     return (
       <div onClick={this.handleClickParent}>
-        <h3 onClick={this.handleClick}>Heading 3</h3>
+        <a onClick={this.handleClick} href="www.baidu.com">Heading 3</a>
         <SmallHeaderWithState number={this.state.number} />
         <Acc name="strong"/>
       </div>
