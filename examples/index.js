@@ -57,17 +57,22 @@ class App extends Strong.Component {
   constructor(props) {
     super(props)
 
-    this.state = { number: 0 }
+    this.state = { 
+      number: 0,
+      isClick: false, 
+    }
 
   }
 
   handleClick = (e) => {
     console.log('in callback', e)
     this.setState({
+      isClick: true,
       number: this.state.number + 1,
     })
     e.stopPropagation()
     e.preventDefault()
+
   }
 
   handleClickParent = (e) => {
@@ -75,9 +80,10 @@ class App extends Strong.Component {
   }
 
   render() {
+    console.log(this.state.isClick)
     return (
       <div onClick={this.handleClickParent}>
-        <a onClick={this.handleClick} href="www.baidu.com">Heading 3</a>
+        <a {...(this.state.isClick ? {} : {onClick: this.handleClick})} href="www.baidu.com">Heading 3</a>
         <SmallHeaderWithState number={this.state.number} />
         <Acc name="strong"/>
       </div>

@@ -5,7 +5,8 @@ import {updateStyles, removeProperty, setProperty} from './DOM'
 
 const R = require('ramda')
 
-console.log(R)
+const registerEvents = {}
+
 
 export const updateProps = (propName) => {
   if(propName === 'ref') {
@@ -48,15 +49,16 @@ function updateStyle(domNode, key, preStyle = {}, nextStyle = {}) {
 function updateEvent(domNode, key, prevCallback, nextCallback) {
   const modifyKey = key.slice(2).toLocaleLowerCase()
   if(!nextCallback) {
-    // 需要删除绑定函数
+    domNode._events[modifyKey] = undefined
   }
   // 添加回调函数
   else {
     domNode._events = domNode.events || {}
     // 将onClick转换为click
+    
     domNode._events[modifyKey] = nextCallback
-    console.log('in event', key)
-    addEvent(document, modifyKey, dispatchEvent)
+    !registerEvents[modifyKey] && addEvent(document, modifyKey, dispatchEvent)
+    registerEvents[modifyKey] = true
   }
 }
 
